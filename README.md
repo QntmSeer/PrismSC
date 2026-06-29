@@ -1,5 +1,11 @@
 # PrismSC: Clinical-Grade Single-Cell Cohort Pipeline
 
+```text
+      /\
+     /  \   P R I S M   S C
+    /____\  [ rna | atac | wnn ]
+```
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Snakemake](https://img.shields.io/badge/Snakemake-Workflow-blue.svg)](https://snakemake.github.io)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
