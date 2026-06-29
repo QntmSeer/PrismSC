@@ -1,6 +1,7 @@
 # Data and Results
 data/
-results/
+results/*
+!results/plots/
 .snakemake/
 __pycache__/
 *.h5mu
