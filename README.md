@@ -34,7 +34,7 @@ PrismSC is designed to answer key clinical questions:
                                ▼
         ┌──────────────────────────────────────────────┐
         │   Module 2: Cohort Integration (Zarr DB)     │
-        │   • scVI (transcriptomics batch correction)   │
+        │   • scVI (transcriptomics batch correction)  │
         │   • MultiVI / WNN (joint multi-omics)        │
         └──────────────────────┬───────────────────────┘
                                ▼
