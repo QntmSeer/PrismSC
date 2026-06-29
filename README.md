@@ -121,15 +121,56 @@ To verify the workflow DAG and configuration without executing scripts:
 
 ## 🐳 Docker Deployment
 
-The pipeline is fully containerized. To build and run in a Docker container:
+The pipeline is containerized using a lightweight Docker context (excluding large datasets via `.dockerignore`). 
 
 ```bash
-# Build the container image
+# Build the production-ready container image
 docker build -t prismsc-pipeline .
 
-# Run the pipeline inside the container
+# Execute on CPU (mapping results directory)
 docker run -v $(pwd)/results:/app/results prismsc-pipeline snakemake --cores 8
+
+# Execute with GPU Acceleration (requires NVIDIA Container Toolkit)
+docker run --gpus all -v $(pwd)/results:/app/results prismsc-pipeline snakemake --cores 8
 ```
+
+---
+
+## ☁️ Cloud & HPC Orchestration
+
+### 1. On-Premise Clusters (SLURM)
+PrismSC includes a pre-configured Snakemake execution profile for SLURM cluster submission:
+*   **Snakemake v8+ (Plugin Executor):**
+    ```bash
+    pip install snakemake-executor-plugin-slurm
+    snakemake --profile config/slurm
+    ```
+*   **Snakemake v7 (Legacy fallback):**
+    ```bash
+    snakemake --cluster "sbatch --partition=standard --cpus-per-task={threads} --mem={resources.mem_mb}" -j 16
+    ```
+
+### 2. Cloud Orchestration (AWS Batch)
+To run dynamically on AWS serverless compute resources, leverage the official AWS executor plugin to route files to S3 buckets:
+```bash
+pip install snakemake-executor-plugin-aws-batch snakemake-storage-plugin-s3
+
+snakemake --executor aws-batch \
+          --jobs 100 \
+          --default-resources s3_bucket=my-single-cell-bucket
+```
+
+---
+
+## 🧬 Tissue-Specific Configurations
+To run the workflow on organs other than immune cells, modify `params.annotation.model` in [config.yaml](file:///c:/Users/Gebruiker/Documents/Bioinformatics/PrismSC/config/config.yaml). The cell annotation script will automatically download the respective CellTypist neural net and route to matching lineage fallback marker panels if the model fails:
+
+| Organ | CellTypist Model | Fallback Lineage Markers |
+| :--- | :--- | :--- |
+| **Immune (Default)** | `Immune_All_Low.pkl` | T-cells, B-cells, Monocytes, NK, Granulocytes |
+| **Brain** | `Human_Dev_Brain.pkl` | Neurons, Astrocytes, Oligodendrocytes, Microglia |
+| **Lung** | `Human_Lung_Atlas.pkl` | Epithelial, Endothelial, Stromal, Immune |
+| **Kidney** | `Kidney_Biopsy.pkl` | Podocytes, Proximal Tubule, Loop of Henle, Collecting Duct |
 
 ---
 

@@ -1,0 +1,11 @@
+# config/slurm/config.yaml
+# PrismSC Snakemake profile for Slurm workload manager orchestration
+
+# Legacy Snakemake v7 sbatch cluster submission config
+cluster: "sbatch --partition=standard --cpus-per-task={threads} --mem={resources.mem_mb} --output=results/logs/slurm-%j.out"
+
+# Resource limitations and defaults
+jobs: 16
+default-resources:
+  - mem_mb=8000
+  - disk_mb=10000

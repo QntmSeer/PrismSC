@@ -1,0 +1,22 @@
+# Exclude Git history
+.git/
+.gitignore
+
+# Exclude large single-cell datasets and pipeline results
+data/
+results/
+.snakemake/
+__pycache__/
+*.h5mu
+*.h5ad
+*.zarr/
+
+# Exclude local environment files and logs
+.venv/
+.env
+scratch/
+*.log
+
+# Exclude Rust target builds
+src/prism_qc/target/
+target/

@@ -62,15 +62,41 @@ def main():
         else:
             # Heuristic scoring fallback
             log_info("PrismSC", "Running fallback marker gene scoring...")
-            markers = {
-                'T_cells': ['CD3D', 'CD3E', 'CD4', 'CD8A'],
-                'B_cells': ['MS4A1', 'CD19'],
-                'Monocytes': ['CD14', 'LYZ', 'MS4A2'],
-                'NK_cells': ['GNLY', 'NKG7'],
-                'Granulocytes': ['ELANE', 'MPO']
-            }
             
-            # Calculate score for each immune cell type
+            # Dynamically determine marker genes based on the selected CellTypist model
+            model_lower = model_name.lower()
+            if "brain" in model_lower or "cortex" in model_lower:
+                markers = {
+                    'Neurons': ['MAP2', 'SNAP25', 'SYT1'],
+                    'Astrocytes': ['GFAP', 'ALDH1L1', 'AQP4'],
+                    'Oligodendrocytes': ['MBP', 'MOG', 'OLIG2'],
+                    'Microglia': ['AIF1', 'TMEM119']
+                }
+            elif "lung" in model_lower:
+                markers = {
+                    'Epithelial_cells': ['EPCAM', 'KRT5', 'SFTPC'],
+                    'Endothelial_cells': ['PECAM1', 'CD34'],
+                    'Stromal_cells': ['COL1A1', 'ACTA2'],
+                    'Immune_cells': ['PTPRC']
+                }
+            elif "kidney" in model_lower:
+                markers = {
+                    'Podocytes': ['NPHS1', 'NPHS2', 'SYNPO'],
+                    'Proximal_Tubule_cells': ['LRP2', 'CUBN', 'SLC5A1'],
+                    'Loop_of_Henle_cells': ['UMOD', 'SLC12A1'],
+                    'Collecting_Duct_cells': ['AQP2', 'FXYD4']
+                }
+            else:
+                # Default to immune panel (Immune_All_Low.pkl, etc.)
+                markers = {
+                    'T_cells': ['CD3D', 'CD3E', 'CD4', 'CD8A'],
+                    'B_cells': ['MS4A1', 'CD19'],
+                    'Monocytes': ['CD14', 'LYZ', 'MS4A2'],
+                    'NK_cells': ['GNLY', 'NKG7'],
+                    'Granulocytes': ['ELANE', 'MPO']
+                }
+            
+            # Calculate score for each cell type
             for cell_label, genes in markers.items():
                 valid_genes = [g for g in genes if g in rna_norm.var_names]
                 if len(valid_genes) > 0:
