@@ -1,0 +1,25 @@
+# workflow/Snakefile
+# Main entry point for PrismSC Clinical Single-Cell Pipeline
+
+configfile: "config/config.yaml"
+
+import pandas as pd
+import os
+
+# Load cohort samples
+cohort = pd.read_csv(config["cohort_manifest"], sep="\t")
+samples = list(cohort["sample_id"])
+
+rule all:
+    input:
+        expand("results/qc/{sample}_qc_metrics.json", sample=samples),
+        expand("results/annotation/{sample}_cell_types.h5ad", sample=samples),
+        "results/plots/cellrank_trajectory.png",
+        "results/reports/cohort_clinical_report.html"
+
+# Include modular rules
+include: "rules/preprocessing.smk"
+include: "rules/integration.smk"
+include: "rules/annotation.smk"
+include: "rules/dynamics.smk"
+include: "rules/reporting.smk"

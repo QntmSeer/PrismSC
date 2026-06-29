@@ -1,0 +1,18 @@
+# config/config.yaml
+# Configuration file for PrismSC Clinical Single-Cell Pipeline
+
+cohort_manifest: "config/cohort_manifest_3k.tsv"
+reference_atlas: "data/pbmc_reference_atlas.h5ad"
+
+params:
+  qc:
+    min_genes: 200
+    max_genes: 6000
+    pct_mito: 20.0
+  integration:
+    batch_key: "patient_id"
+    method: "scvi"  # Options: scvi, peakvi, multivi, wnn, arches
+    max_epochs: 30
+    early_stopping: true
+  annotation:
+    model: "Immune_All_Low.pkl" # CellTypist pre-trained model

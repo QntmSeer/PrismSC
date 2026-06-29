@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ClinicalCohortManifest",
+  "type": "object",
+  "properties": {
+    "samples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "sample_id": { "type": "string" },
+          "patient_id": { "type": "string" },
+          "file_path": { "type": "string" },
+          "condition": { "type": "string", "enum": ["Healthy", "Inflamed", "Post-Treatment"] }
+        },
+        "required": ["sample_id", "patient_id", "file_path", "condition"]
+      }
+    }
+  },
+  "required": ["samples"]
+}
