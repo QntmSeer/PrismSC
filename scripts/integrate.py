@@ -12,9 +12,10 @@ import json
 import subprocess
 import pandas as pd
 import numpy as np
-from log_utils import log_info, log_success, log_warn, log_error
+from log_utils import log_info, log_success, log_warn, log_error, print_logo
 
 def main():
+    print_logo()
     h5ads = snakemake.input.h5ads
     output_zarr = snakemake.output.zarr
     config = snakemake.config
