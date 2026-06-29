@@ -73,24 +73,12 @@ def log_error(module, message, style="prism"):
 
 def print_logo():
     logo = r"""
-                  /\
-                 /  \
-                /    \
-               /  /\  \
- =============/==/==\==\=============
-             /  /    \  \  . · :  [RNA-seq]
-            /  /______\  \  : .   [ATAC-seq]
-           /_____________\   · .  [WNN-Graph]
-
-   ____       _               ____   ____ 
-  / __ \_____(_)________ ___ / ___/  / ___/ 
- / /_/ / ___/ / ___/ __ `__ \\___ \ / /     
-/ ____/ /  / (__  ) / / / / /___/ // /___   
-/_/   /_/  /_/____/_/ /_/ /_//____/ \____/  
+      /\
+     /  \   P R I S M   S C
+    /____\  [ rna | atac | wnn ]
 """
     for line in logo.strip("\n").split("\n"):
         print(gradient_text(line, style="prism"))
     print()
     sys.stdout.flush()
-
 
