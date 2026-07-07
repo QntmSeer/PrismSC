@@ -10,12 +10,15 @@
 [![Snakemake](https://img.shields.io/badge/Snakemake-Workflow-blue.svg)](https://snakemake.github.io)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
 [![Version](https://img.shields.io/badge/version-v1.0.0--stable-green)](#)
+[![Live Report](https://img.shields.io/badge/Live-Interactive_Report-purple.svg)](https://QntmSeer.github.io/PrismSC/)
 
 PrismSC is a "one-stop" clinical single-cell cohort processing workflow designed for secure, reproducible, and scalable analysis of joint scRNA-seq and scATAC-seq datasets. It integrates quality control, batch correction, automated cell annotation, lineage fate mapping, and clinical diagnostics HTML reporting.
 
+![Clinical Report Preview](docs/cohort_clinical_report_preview.png)
+
 ---
 
-## 🔬 Biological Context & Objectives
+## Biological Context & Objectives
 
 PrismSC is designed to answer key clinical questions:
 1. **Cellular Composition Analysis**: Automatically identify and quantify cell populations across multiple patient cohorts under different clinical conditions (e.g., Healthy vs. Inflamed vs. Post-Treatment).
@@ -26,7 +29,7 @@ PrismSC is designed to answer key clinical questions:
 
 ---
 
-## 🛠️ Pipeline Architecture
+## Pipeline Architecture
 
 ```
                        Cohort Manifest (TSV)
@@ -65,7 +68,7 @@ PrismSC is designed to answer key clinical questions:
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 PrismSC/
@@ -96,7 +99,7 @@ PrismSC/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Installation
 
@@ -119,7 +122,7 @@ To verify the workflow DAG and configuration without executing scripts:
 
 ---
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 The pipeline is containerized using a lightweight Docker context (excluding large datasets via `.dockerignore`). 
 
@@ -136,7 +139,7 @@ docker run --gpus all -v $(pwd)/results:/app/results prismsc-pipeline snakemake 
 
 ---
 
-## ☁️ Cloud & HPC Orchestration
+## Cloud & HPC Orchestration
 
 ### 1. On-Premise Clusters (SLURM)
 PrismSC includes a pre-configured Snakemake execution profile for SLURM cluster submission:
@@ -162,7 +165,7 @@ snakemake --executor aws-batch \
 
 ---
 
-## 🧬 Tissue-Specific Configurations
+## Tissue-Specific Configurations
 To run the workflow on organs other than immune cells, modify `params.annotation.model` in [config.yaml](file:///c:/Users/Gebruiker/Documents/Bioinformatics/PrismSC/config/config.yaml). The cell annotation script will automatically download the respective CellTypist neural net and route to matching lineage fallback marker panels if the model fails:
 
 | Organ | CellTypist Model | Fallback Lineage Markers |
@@ -172,8 +175,19 @@ To run the workflow on organs other than immune cells, modify `params.annotation
 | **Lung** | `Human_Lung_Atlas.pkl` | Epithelial, Endothelial, Stromal, Immune |
 | **Kidney** | `Kidney_Biopsy.pkl` | Podocytes, Proximal Tubule, Loop of Henle, Collecting Duct |
 
+## GitHub Pages Deployment
+
+The clinical diagnostics HTML report is set up to deploy automatically to GitHub Pages. To host and view the interactive, live report on the web:
+1. Go to your **PrismSC** repository page on GitHub.
+2. Click on the **Settings** tab at the top-right.
+3. Select **Pages** on the left-hand navigation sidebar.
+4. Under **Build and deployment -> Source**, select `Deploy from a branch`.
+5. Set the branch to `main` and the target folder to `/docs`, then click **Save**.
+6. GitHub will build the site; your interactive clinical dashboard will be live at:
+   **`https://QntmSeer.github.io/PrismSC/`**
+
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
