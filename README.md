@@ -10,8 +10,11 @@
 [![Snakemake](https://img.shields.io/badge/Snakemake-Workflow-blue.svg)](https://snakemake.github.io)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://python.org)
 [![Version](https://img.shields.io/badge/version-v1.0.0--stable-green)](#)
+[![Live Report](https://img.shields.io/badge/Live-Interactive_Report-purple.svg)](https://QntmSeer.github.io/PrismSC/)
 
 PrismSC is a "one-stop" clinical single-cell cohort processing workflow designed for secure, reproducible, and scalable analysis of joint scRNA-seq and scATAC-seq datasets. It integrates quality control, batch correction, automated cell annotation, lineage fate mapping, and clinical diagnostics HTML reporting.
+
+![Clinical Report Preview](docs/cohort_clinical_report_preview.jpg)
 
 ---
 
@@ -171,6 +174,17 @@ To run the workflow on organs other than immune cells, modify `params.annotation
 | **Brain** | `Human_Dev_Brain.pkl` | Neurons, Astrocytes, Oligodendrocytes, Microglia |
 | **Lung** | `Human_Lung_Atlas.pkl` | Epithelial, Endothelial, Stromal, Immune |
 | **Kidney** | `Kidney_Biopsy.pkl` | Podocytes, Proximal Tubule, Loop of Henle, Collecting Duct |
+
+## 🌐 GitHub Pages Deployment
+
+The clinical diagnostics HTML report is set up to deploy automatically to GitHub Pages. To host and view the interactive, live report on the web:
+1. Go to your **PrismSC** repository page on GitHub.
+2. Click on the **Settings** tab at the top-right.
+3. Select **Pages** on the left-hand navigation sidebar.
+4. Under **Build and deployment -> Source**, select `Deploy from a branch`.
+5. Set the branch to `main` and the target folder to `/docs`, then click **Save**.
+6. GitHub will build the site; your interactive clinical dashboard will be live at:
+   👉 **`https://QntmSeer.github.io/PrismSC/`**
 
 ---
 
