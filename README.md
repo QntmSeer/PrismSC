@@ -1,4 +1,4 @@
-# PrismSC: Clinical-Grade Single-Cell Cohort Pipeline
+# PrismSC: Multi-Modal Single-Cell Cohort Integration Pipeline
 
 ```text
       /\
@@ -12,7 +12,7 @@
 [![Version](https://img.shields.io/badge/version-v1.0.0--stable-green)](#)
 [![Live Report](https://img.shields.io/badge/Live-Interactive_Report-purple.svg)](https://QntmSeer.github.io/PrismSC/)
 
-PrismSC is a "one-stop" clinical single-cell cohort processing workflow designed for secure, reproducible, and scalable analysis of joint scRNA-seq and scATAC-seq datasets. It integrates quality control, batch correction, automated cell annotation, lineage fate mapping, and clinical diagnostics HTML reporting.
+PrismSC is a single-cell cohort processing workflow designed for reproducible and scalable analysis of joint scRNA-seq and scATAC-seq datasets. It integrates quality control, batch correction, automated cell annotation, lineage fate mapping, and interactive diagnostics HTML reporting.
 
 ![Clinical Report Preview](docs/cohort_clinical_report_preview.png)
 
@@ -25,7 +25,7 @@ PrismSC is designed to answer key clinical questions:
 2. **Multi-Modal Integration**: Fuse transcriptomic and chromatin accessibility profiles using Weighted Nearest Neighbors (WNN) or probabilistic deep generative models (MultiVI, scVI).
 3. **Automated Annotation**: Eliminate manual annotation bias by using pre-trained **CellTypist** immune classifiers.
 4. **Developmental Dynamics & Fate Mapping**: Use **CellRank 2** (GPCCA) and **PAGA** to map cell transition probabilities and fate commitments along differentiation trajectories (e.g., Monocyte subset maturation).
-5. **Interactive Clinical Reporting**: Consolidate QC statistics, modality projections, cell proportions, and fate mapping drivers into a portable, clinician-ready HTML report.
+5. **Interactive Diagnostics Reporting**: Consolidate QC statistics, modality projections, cell proportions, and fate mapping drivers into a portable, researcher-ready HTML report.
 
 ---
 
@@ -60,10 +60,10 @@ PrismSC is designed to answer key clinical questions:
         └──────────────────────┬───────────────────────┘
                                ▼
         ┌──────────────────────────────────────────────┐
-        │   Module 5: Clinician Diagnostic Reporting   │
+        │   Module 5: Diagnostic Reporting             │
         │   • Self-contained HTML report with CSS      │
         │   • Base64-embedded high-res vector plots    │
-        └──────────────────────────────────────────────┘
+        └──────────────────────┬───────────────────────┘
 ```
 
 ---
@@ -127,7 +127,7 @@ To verify the workflow DAG and configuration without executing scripts:
 The pipeline is containerized using a lightweight Docker context (excluding large datasets via `.dockerignore`). 
 
 ```bash
-# Build the production-ready container image
+# Build the docker container image
 docker build -t prismsc-pipeline .
 
 # Execute on CPU (mapping results directory)
@@ -166,7 +166,7 @@ snakemake --executor aws-batch \
 ---
 
 ## Tissue-Specific Configurations
-To run the workflow on organs other than immune cells, modify `params.annotation.model` in [config.yaml](file:///c:/Users/Gebruiker/Documents/Bioinformatics/PrismSC/config/config.yaml). The cell annotation script will automatically download the respective CellTypist neural net and route to matching lineage fallback marker panels if the model fails:
+To run the workflow on organs other than immune cells, modify `params.annotation.model` in [config.yaml](config/config.yaml). The cell annotation script will automatically download the respective CellTypist neural net and route to matching lineage fallback marker panels if the model fails:
 
 | Organ | CellTypist Model | Fallback Lineage Markers |
 | :--- | :--- | :--- |

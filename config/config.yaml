@@ -1,7 +1,7 @@
 # config/config.yaml
 # Configuration file for PrismSC Clinical Single-Cell Pipeline
 
-cohort_manifest: "config/cohort_manifest_3k.tsv"
+cohort_manifest: "config/cohort_manifest.tsv"
 reference_atlas: "data/pbmc_reference_atlas.h5ad"
 
 params:

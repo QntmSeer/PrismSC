@@ -91,7 +91,7 @@ def main():
                 markers = {
                     'T_cells': ['CD3D', 'CD3E', 'CD4', 'CD8A'],
                     'B_cells': ['MS4A1', 'CD19'],
-                    'Monocytes': ['CD14', 'LYZ', 'MS4A2'],
+                    'Monocytes': ['CD14', 'LYZ', 'CD68'],
                     'NK_cells': ['GNLY', 'NKG7'],
                     'Granulocytes': ['ELANE', 'MPO']
                 }

@@ -34,7 +34,7 @@ def main():
 
     temp_rna_path = "results/temp/temp_rna.h5ad"
     temp_atac_path = "results/temp/temp_atac.h5ad"
-    python_bin = "/home/qntm/miniforge3/envs/prismsc_gpu/bin/python"
+    python_bin = sys.executable
 
     # 1. Isolated Concatenation
     try:
@@ -63,6 +63,8 @@ def main():
         "device_name": "NVIDIA GPU" if use_gpu else "CPU"
     }
 
+    failed_models = []
+
     # 2. Isolated SCVI VAE model
     temp_scvi_npy = "results/temp/scvi.npy"
     if os.path.exists(temp_rna_path):
@@ -77,6 +79,7 @@ def main():
             subprocess.run(args, check=True)
         except Exception as e:
             log_warn("PrismSC", f"SCVI failed in subprocess: {e}")
+            failed_models.append(f"scVI: {e}")
 
     # 3. Isolated PeakVI VAE model
     temp_peakvi_npy = "results/temp/peakvi.npy"
@@ -89,6 +92,7 @@ def main():
             ], check=True)
         except Exception as e:
             log_warn("PrismSC", f"PeakVI failed in subprocess: {e}")
+            failed_models.append(f"PeakVI: {e}")
 
     # 4. Isolated MultiVI VAE model
     temp_multivi_npy = "results/temp/multivi.npy"
@@ -101,6 +105,12 @@ def main():
             ], check=True)
         except Exception as e:
             log_warn("PrismSC", f"MultiVI failed in subprocess: {e}")
+            failed_models.append(f"MultiVI: {e}")
+
+    # Write fallback diagnostics if any VAE model failed
+    if failed_models:
+        diagnostics["fallback_triggered"] = True
+        diagnostics["fallback_reason"] = "Subprocess integration failure(s): " + "; ".join(failed_models)
 
     # 5. Isolated WNN integration
     temp_diag_json = "results/temp/diag.json"
